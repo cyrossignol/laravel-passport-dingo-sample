@@ -169,7 +169,9 @@ return [
     */
 
     'auth' => [
-
+        // Custom Dingo auth provider that bridges Passport's authentication by
+        // simply reusing the User authenticated by Passport:
+        'passport' => App\Providers\PassportDingoAuthProvider::class
     ],
 
     /*

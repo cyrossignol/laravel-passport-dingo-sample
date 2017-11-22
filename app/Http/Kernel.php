@@ -35,11 +35,23 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
+            // Creates a custom token in a cookie so that API requests from the
+            // web (JavaScript) do not need a formal OAuth access token:
+            \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
         ],
 
         'api' => [
             'throttle:60,1',
             'bindings',
+        ],
+
+        // Convenience group containing the auth middleware for Passport and
+        // Dingo so that the custom 'App\Providers\PassportDingoAuthProvider'
+        // can bridge the auth systems:
+        'auth:api-combined' => [
+            'auth:api', // Passport
+            'api.auth', // Dingo
         ],
     ];
 
